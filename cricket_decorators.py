@@ -4,7 +4,8 @@ def over(balls):
 		return balls/6
 	return balls%6/10+balls//6
 print(over(2400))
-	
+
+
 import time as t
 
 def decorator(func):
