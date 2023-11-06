@@ -1,3 +1,10 @@
+"""
+Given a list of integers, in which any number occured morethan twice and remove them and put into a new list. 
+In the new list, if any number occured morethan once, then put that second value as underscore(_).
+"""
+
+
+
 a=[1,1,1,1,2,2,2,3,3,3]
 c=[]
 for x in a:
