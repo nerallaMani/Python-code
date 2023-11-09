@@ -1,5 +1,5 @@
 #print square pattern
-n=int(input("enter how many lines you want for square pattern: "))
+n=int(input("enter how many lines you want for square and triangle pattern: "))
 
 for i in range(n):
     for j in range(n):
