@@ -16,16 +16,16 @@ Harry
 
 '''
 
-records = []
+records = []   #taking empty list
 for _ in range(int(input())):
     name = input()
     score = float(input())
     records.append([name, score])
 
-scores = set([x[1] for x in records])
+scores = set([x[1] for x in records])  #here used list comprehension along with set to take unique values
 low_marks = list(scores)
 low_marks.sort()
-second_low = low_marks[1]
+second_low = low_marks[1]    # took only second lowest value from list of marks
 
 student = []
 
@@ -36,5 +36,6 @@ for name in records:
 
 student.sort()
 
+# printing the order of students
 for names in student:
     print(names)
