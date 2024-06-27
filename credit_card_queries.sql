@@ -62,27 +62,8 @@ Grocery
  from cte) x
  where rn = 1
 
- --7) find no.of cities which do not have gold card --doubt, 
- select count(distinct city) as total_cities
- from credit_card_transcations
- where city not in (
-						 select distinct city
-						 from credit_card_transcations
-						 where card_type = 'gold'
-						 )
-
-SELECT COUNT(DISTINCT t1.city) AS total_cities
-FROM credit_card_transactions t1
-LEFT JOIN (
-    SELECT DISTINCT city
-    FROM credit_card_transactions
-    WHERE card_type = 'gold'
-) t2 ON t1.city = t2.city
-WHERE t2.city IS NULL
-go
-
-
-SELECT COUNT(DISTINCT city) AS total_cities
+ --7) find no.of cities which do not have gold card 
+ SELECT COUNT(DISTINCT city) AS total_cities
 FROM credit_card_transcations
 WHERE city NOT IN (
     SELECT DISTINCT city
@@ -94,7 +75,7 @@ go
 select * from credit_card_transcations
 
 
---8) write a query to find percentage contribution of spends by females for each expense type (doubt)
+--8) write a query to find percentage contribution of spends by females for each expense type 
 select exp_type,
 	   sum(case when gender='f' then amount else 0 end)*1.0/sum(amount) as percentage_female_contribution
 from credit_card_transcations
@@ -102,11 +83,47 @@ group by exp_type
 order by 2 desc
 
 
-select exp_type,
-	   sum(case when gender='f' then amount else 0 end)/sum(amount) as percentage_female_contribution
+--9)  Card type usage by city level
+select  city,
+		card_type, 
+	    count(*) as count
 from credit_card_transcations
-group by exp_type
+group by city, card_type
+order by 1,3 desc
+
+
+--10) Top 5 cities with highest average transaction amount by card type
+select top 5 city,
+			  card_type,
+			  avg(amount) avg_amt
+from credit_card_transcations
+group by city,card_type
+order by 3 desc
+
+select * from credit_card_transcations
+
+
+--11) Find percentage of gender in this dataset
+select 100*sum(case when gender = 'M' then 1 else 0 end)/count(*) Male_Percentage,
+	   100*sum(case when gender = 'F' then 1 else 0 end)/count(*) Female_Percentage	
+from credit_card_transcations
+
+select *from credit_card_transcations where gender is null 
+
+--12) Monthly Transaction Count Trend
+select
+	datepart(year,transaction_date) as Year,
+	datename(month,transaction_date)as Month_Name,
+	count(*) no_of_transactions
+from credit_card_transcations
+group by datepart(year,transaction_date), datename(month,transaction_date)
+order by 1,2
+
+
+--13) Top 5 Cities by Total Transaction Value
+select top 5 
+	   city,
+	   sum(amount) total_transaction_value 
+from credit_card_transcations
+group by city
 order by 2 desc
-
-
- 
